@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.db.session import engine, Base
-from app.api.v1 import auth, customers, items
+from app.api.v1 import auth, customers, items, permissions
 from app.core.config import API_PREFIX
 
 app = FastAPI(title="FastAPI RBAC Starter")
@@ -22,6 +22,10 @@ app.add_middleware(
 app.include_router(auth.router, prefix=f"{API_PREFIX}/auth", tags=["auth"])
 app.include_router(customers.router, prefix=f"{API_PREFIX}/customers", tags=["customers"])
 app.include_router(items.router, prefix=f"{API_PREFIX}/items", tags=["items"])
+
+# ...
+app.include_router(permissions.router, prefix=f"{API_PREFIX}/permissions", tags=["permissions"])
+
 
 @app.get("/")
 def root():
